@@ -1,11 +1,36 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
+
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-<f:view>
-    <h:outputLabel value="Hello, world"/>
-</f:view>
+>
+<h:head>
+    <h:outputStylesheet library="css" name="style.css"/>
+</h:head>
+<h:body>
+    <h2>Libraries:</h2>
+    <ol>
+        <ui:repeat value="#{libraries.allLibraries}" var="library">
+<!--            <li><h:link value="#{library.name}" /></li>-->
+            <li><h:link value="#{library.name}" outcome="library?libraryId=#{library.id}" /></li>
+        </ui:repeat>
+    </ol>
+    <h:form>
+        <h:inputText value="#{libraries.libraryToCreate.name}" required="true" />
+        <h:commandButton value="Add new library" actionListener="#{libraries.createLibrary}" action="index?faces-redirect=true"/>
+    </h:form>
+
+    <h2>Readers:</h2>
+    <ol>
+        <ui:repeat value="#{readers.allReaders}" var="reader">
+            <li><h:link value="#{reader.name}" outcome="reader?readerId=#{reader.id}" /></li>
+        </ui:repeat>
+    </ol>
+    <h:form>
+        <h:inputText value="#{readers.readerToCreate.name}" required="true" />
+        <h:commandButton value="Add new reader" actionListener="#{readers.createReader}" action="index?faces-redirect=true"/>
+    </h:form>
+    <h:link outcome="myBatis/libraries" value="MyBatis implementation"/>
+
+</h:body>
 </html>

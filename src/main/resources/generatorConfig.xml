@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!-- Context for MyBatis Generator -->
+    <context id="BibliotekaDB" targetRuntime="MyBatis3Simple">
+        <!-- JDBC Connection Configuration -->
+        <jdbcConnection driverClass="org.h2.Driver"
+                        connectionURL="jdbc:h2:~/h2database/BibliotekaDB;AUTO_SERVER=TRUE"
+                        userId="sa"
+                        password="sa">
+    </jdbcConnection>
+
+    <!-- Java Model (Entities) Generation -->
+    <javaModelGenerator targetPackage="lt.biblioteka.biblioteka.mybatis.model" targetProject="src/main/java" />
+
+    <!-- SQL Map (XML Mappings) Generation -->
+    <sqlMapGenerator targetPackage="mybatis_xml" targetProject="src/main/resources" />
+
+    <!-- Java Client (Mapper Interface) Generation -->
+    <javaClientGenerator type="XMLMAPPER" targetPackage="lt.biblioteka.biblioteka.mybatis.dao" targetProject="src/main/java" />
+
+    <!-- Table configuration for Book -->
+    <table schema="public" tableName="book">
+        <generatedKey column="id" identity="true" sqlStatement="JDBC" />
+    </table>
+
+    <!-- Table configuration for Reader -->
+    <table schema="public" tableName="reader">
+        <generatedKey column="id" identity="true" sqlStatement="JDBC" />
+    </table>
+
+    <!-- Table configuration for Library -->
+    <table schema="public" tableName="library">
+        <generatedKey column="id" identity="true" sqlStatement="JDBC" />
+    </table>
+
+    <!-- Many-to-Many table (for Reader-Library relationship) -->
+    <table schema="public" tableName="library_reader">
+        <generatedKey column="library_id,reader_id" identity="true" sqlStatement="JDBC" />
+    </table>
+</context></generatorConfiguration>

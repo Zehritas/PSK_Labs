@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <typeAlias type="lt.biblioteka.biblioteka.mybatis.model.Book" alias="Book"/>
+        <typeAlias type="lt.biblioteka.biblioteka.mybatis.model.Library" alias="Library"/>
+        <typeAlias type="lt.biblioteka.biblioteka.mybatis.model.Reader" alias="Reader"/>
+<!--        <typeAlias type="lt.vu.mybatis.model.Player" alias="Player"/>-->
+    </typeAliases>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="MANAGED"/>
+            <dataSource type="JNDI">
+                <property name="data_source" value="BibliotekaDataSource"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+
+<!--        <mapper resource="lt/biblioteka/biblioteka/mybatis/dao/BookMapper.xml"/>-->
+<!--        <mapper resource="lt/biblioteka/biblioteka/mybatis/dao/LibraryMapper.xml"/>-->
+<!--        <mapper resource="lt/biblioteka/biblioteka/mybatis/dao/ReaderMapper.xml"/>-->
+        <mapper resource="mybatis_xml/BookMapper.xml"/>
+        <mapper resource="mybatis_xml/LibraryMapper.xml"/>
+        <mapper resource="mybatis_xml/ReaderMapper.xml"/>
+    </mappers>
+</configuration>

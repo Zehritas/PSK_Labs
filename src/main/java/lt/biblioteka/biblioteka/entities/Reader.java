@@ -4,13 +4,12 @@ import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
-
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "Library.findAll", query = "select t from Library as t")
+        @NamedQuery(name = "Reader.findAll", query = "select t from Reader as t")
 })
-@Table(name = "Library")
-public class Library {
+@Table(name = "Reader")
+public class Reader {
     @GeneratedValue
     @Id
     private Long id;
@@ -34,7 +33,7 @@ public class Library {
         this.name = name;
     }
 
-    @OneToMany(mappedBy = "library")
+    @OneToMany(mappedBy = "reader")
     private List<Book> books;
 
     public List<Book> getBooks() {
@@ -46,27 +45,35 @@ public class Library {
     }
 
     @ManyToMany
-//    @JoinTable(
-//            name = "reader_library",
-//            joinColumns = @JoinColumn(name = "library_id"),
-//            inverseJoinColumns = @JoinColumn(name = "reader_id")
-//    )
-    private List<Reader> readers;
+    @JoinTable(
+            name = "reader_library",
+            joinColumns = @JoinColumn(name = "reader_id"),
+            inverseJoinColumns = @JoinColumn(name = "library_id")
+    )
+    private List<Library> libraries;
 
-    public List<Reader> getReaders() {
-        return readers;
+    public List<Library> getLibraries() {
+        return libraries;
     }
 
-    public void setReaders(List<Reader> readers) {
-        this.readers = readers;
+    public void setLibraries(List<Library> libraries) {
+        this.libraries = libraries;
     }
+
+    public void addLibrary(Library library) {
+        if (!libraries.contains(library)) {
+            libraries.add(library);
+            library.getReaders().add(this); // Update the inverse side of the relationship
+        }
+    }
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Library library = (Library) o;
-        return Objects.equals(getId(), library.getId()) && Objects.equals(getName(), library.getName());
+        Reader reader = (Reader) o;
+        return Objects.equals(getId(), reader.getId()) && Objects.equals(getName(), reader.getName());
     }
 
     @Override

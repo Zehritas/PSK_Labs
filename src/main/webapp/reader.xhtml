@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+    <h:outputStylesheet library="css" name="style.css"/>
+</h:head>
+
+<h:body>
+    <h1>Reader Details</h1>
+
+    <!-- Display the Reader's Name -->
+    <h2>Reader: #{readerForPage.reader.name}</h2>
+
+    <!-- Display the Libraries the Reader is in -->
+    <h3>Libraries:</h3>
+
+    <!-- Iterate over the libraries associated with the reader -->
+    <ol>
+        <ui:repeat value="#{readerForPage.reader.libraries}" var="library">
+            <li>
+                <h:link value="#{library.name}" outcome="library?libraryId=#{library.id}" />
+            </li>
+        </ui:repeat>
+    </ol>
+
+    <!-- Link to go back to the index page -->
+    <h:link value="Back to Index" outcome="index" />
+</h:body>
+</html>
