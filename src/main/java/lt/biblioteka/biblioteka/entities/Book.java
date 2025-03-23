@@ -18,6 +18,7 @@ public class Book {
     }
 
     @Basic
+//    @Column(name = "name_column")  example if my table name field would be named name_column
     private String name;
 
     public String getName() {
@@ -41,7 +42,7 @@ public class Book {
     }
 
     @ManyToOne
-//    @JoinColumn(name = "reader_id", nullable = false) // Ensure the reader is not null/
+
     private Reader reader;
 
     public Reader getReader() {

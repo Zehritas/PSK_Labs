@@ -34,7 +34,7 @@ public class Library {
         this.name = name;
     }
 
-    @OneToMany(mappedBy = "library")
+    @OneToMany(mappedBy = "libraries")
     private List<Book> books;
 
     public List<Book> getBooks() {
@@ -45,12 +45,7 @@ public class Library {
         this.books = books;
     }
 
-    @ManyToMany
-//    @JoinTable(
-//            name = "reader_library",
-//            joinColumns = @JoinColumn(name = "library_id"),
-//            inverseJoinColumns = @JoinColumn(name = "reader_id")
-//    )
+    @ManyToMany(mappedBy = "library")
     private List<Reader> readers;
 
     public List<Reader> getReaders() {

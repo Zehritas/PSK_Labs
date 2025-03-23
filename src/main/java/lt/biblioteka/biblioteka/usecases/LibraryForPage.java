@@ -49,13 +49,12 @@ public class LibraryForPage {
     public void addReader(){
         Reader existingReader = this.readersDAO.findOne(readerToAddId);
         if (existingReader != null && !library.getReaders().contains(existingReader)) {
-            library.getReaders().add(existingReader);  // Add the reader to the library's reader list
-            existingReader.getLibraries().add(library);  // Add the library to the reader's library list
+            library.getReaders().add(existingReader);  // Add the reader to the librarys reader list
+            existingReader.getLibraries().add(library);  // Add the library to the readers library list
 
             this.librariesDAO.persist(library);  // Save the library with the updated reader list
             this.readersDAO.persist(existingReader);  // Save the reader with the updated library list
         } else {
-            // Handle case where the reader is not found (e.g., throw an exception or show an error message)
             throw new IllegalArgumentException("Reader not found with the provided ID");
         }
     }

@@ -31,7 +31,7 @@
     <ol>
         <ui:repeat value="#{libraryForPage.library.books}" var="book">
             <li>
-                <h:link value="#{book.name}" outcome="" />
+                <h:outputText value="#{book.name}" />
             </li>
         </ui:repeat>
     </ol>
