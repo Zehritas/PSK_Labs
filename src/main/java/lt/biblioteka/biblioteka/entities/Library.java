@@ -34,7 +34,7 @@ public class Library {
         this.name = name;
     }
 
-    @OneToMany(mappedBy = "libraries")
+    @OneToMany
     private List<Book> books;
 
     public List<Book> getBooks() {
@@ -45,7 +45,7 @@ public class Library {
         this.books = books;
     }
 
-    @ManyToMany(mappedBy = "library")
+    @ManyToMany
     private List<Reader> readers;
 
     public List<Reader> getReaders() {

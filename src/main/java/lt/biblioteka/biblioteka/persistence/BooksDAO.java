@@ -39,5 +39,10 @@ public class BooksDAO {
 //        query.setParameter("nameFragment", "%" + nameFragment + "%");
 //        return query.getResultList();
 //    }
+public List<Book> findBooksByLibraryId(Long libraryId) {
+    return em.createQuery("SELECT b FROM Book b WHERE b.library.id = :libraryId", Book.class)
+            .setParameter("libraryId", libraryId)
+            .getResultList();
+}
 
 }

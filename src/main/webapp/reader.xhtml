@@ -23,6 +23,7 @@
         <ui:repeat value="#{readerForPage.reader.libraries}" var="library">
             <li>
                 <h:link value="#{library.name}" outcome="library?libraryId=#{library.id}" />
+                <p> #{library.readers.size()} </p>
             </li>
         </ui:repeat>
     </ol>

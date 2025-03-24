@@ -63,7 +63,14 @@ public class LibraryForPage {
         Map<String, String> requestParameters = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         Long libraryId = Long.parseLong(requestParameters.get("libraryId"));
         this.library = librariesDAO.findOne(libraryId);  // Fetch the library based on ID
+        loadBooks();
     }
+    public void loadBooks() {
+        if (this.library != null) {
+            this.library.setBooks(booksDAO.findBooksByLibraryId(this.library.getId()));
+        }
+    }
+
 
     public Library getLibrary() {
         return library;
