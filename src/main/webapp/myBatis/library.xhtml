@@ -9,21 +9,23 @@
     <h:outputStylesheet library="css" name="style.css"/>
 </h:head>
 <h:body>
-    <h1>Library #{libraryForPage.library.name} page.</h1>
+    <h1>Library #{librariesForPageMyBatis.library.name} page.</h1>
+    <h2>Reader Count (pakeitimas):</h2>
+    <p> #{librariesForPageMyBatis.library.readers.size()}</p>
     <h2>All of our books:</h2>
     <ol>
-        <ui:repeat value="#{libraryForPage.library.books}" var="book">
+        <ui:repeat value="#{librariesForPageMyBatis.library.books}" var="book">
             <li>
                 <h:outputText value="#{book.name}" />
             </li>
         </ui:repeat>
     </ol>
     <h:form>
-        <h:inputText a:placeholder="name" value="#{libraryForPage.bookToCreate.name}" required="true" />
+        <h:inputText a:placeholder="name" value="#{librariesForPageMyBatis.bookToCreate.name}" required="true" />
         <h:commandButton value="Add book to the library"
-                         actionListener="#{libraryForPage.createBook}"
-                         action="#{'library?faces-redirect=true&amp;libraryId='.concat(libraryForPage.library.id)}">
-            <f:param name="libraryId" value="#{libraryForPage.library.id}" />
+                         actionListener="#{librariesForPageMyBatis.createBook}"
+                         action="#{'library?faces-redirect=true&amp;libraryId='.concat(librariesForPageMyBatis.library.id)}">
+            <f:param name="libraryId" value="#{librariesForPageMyBatis.library.id}" />
         </h:commandButton>
     </h:form>
     <h:link outcome="/myBatis/libraries" value="Back to index"/>

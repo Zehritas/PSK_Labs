@@ -28,12 +28,4 @@ public class MyBatisResources {
         }
     }
 
-    @Produces
-    @ApplicationScoped
-    public LibraryMapper produceLibraryMapper(SqlSessionFactory sqlSessionFactory) {
-        // Create a session from the SqlSessionFactory and retrieve the LibraryMapper
-        try (SqlSession session = sqlSessionFactory.openSession()) {
-            return session.getMapper(LibraryMapper.class);
-        }
-    }
 }

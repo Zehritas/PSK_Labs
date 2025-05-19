@@ -57,4 +57,5 @@
     select ID, NAME
     from PUBLIC.READER
   </select>
+
 </mapper>

@@ -9,12 +9,15 @@
     <h:outputStylesheet library="css" name="style.css"/>
 </h:head>
 <h:body>
+
+
+
     <h1>Library #{libraryForPage.library.name} page.</h1>
     <h2>All of our readers:</h2>
     <ol>
         <ui:repeat value="#{libraryForPage.library.readers}" var="reader">
             <li>
-                <h:link value="#{reader.name}" outcome="reader?readerId=#{reader.id}" />
+                <h:link value="#{libraryForPage.readerFormatter.format(reader)}" outcome="reader?readerId=#{reader.id}" />
             </li>
         </ui:repeat>
     </ol>
@@ -28,13 +31,26 @@
     </h:form>
 
     <h2>All of our books:</h2>
-    <ol>
+    <h:form>
+        <h:messages globalOnly="true" layout="table" style="color: red;" />
         <ui:repeat value="#{libraryForPage.library.books}" var="book">
             <li>
-                <h:outputText value="#{book.name}" />
+                <h:outputText value="#{libraryForPage.bookFormatter.format(book)}" />
+            </li>
+            <li>
+<!--                <h:outputText value="#{book.borrowed}" />-->
+                <h:commandButton value="Toggle Borrowed"
+                                 action="#{'library?faces-redirect=true&amp;libraryId='.concat(libraryForPage.library.id)}"
+                                 actionListener="#{libraryForPage.toggleBorrowed(book)}">
+                    <f:param name="libraryId" value="#{libraryForPage.library.id}" />
+
+                </h:commandButton>
             </li>
         </ui:repeat>
-    </ol>
+    </h:form>
+
+
+
     <h:form>
         <h:inputText a:placeholder="name" value="#{libraryForPage.bookToCreate.name}" required="true" />
         <h:commandButton value="Add book to the library"
@@ -45,4 +61,6 @@
     </h:form>
     <h:link outcome="index" value="Back to Index"/>
 </h:body>
+
+
 </html>

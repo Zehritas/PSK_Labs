@@ -38,4 +38,8 @@ public class ReadersDAO {
     public Reader findOne(Long id) {
         return em.find(Reader.class, id);
     }
+
+    public Reader update(Reader reader) {
+        return em.merge(reader);
+    }
 }

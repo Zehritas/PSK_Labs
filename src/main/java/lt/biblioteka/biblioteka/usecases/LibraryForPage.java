@@ -2,12 +2,18 @@ package lt.biblioteka.biblioteka.usecases;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.persistence.OptimisticLockException;
+import javax.transaction.RollbackException;
 import javax.transaction.Transactional;
 
 import lombok.Getter;
 import lombok.Setter;
+import lt.biblioteka.biblioteka.interfaces.BookFormatter;
+import lt.biblioteka.biblioteka.interfaces.LibraryNameFormatter;
+import lt.biblioteka.biblioteka.interfaces.ReaderFormatter;
 import lt.biblioteka.biblioteka.persistence.LibrariesDAO;
 import lt.biblioteka.biblioteka.persistence.BooksDAO;
 import lt.biblioteka.biblioteka.persistence.ReadersDAO;
@@ -28,6 +34,15 @@ public class LibraryForPage {
     @Inject
     private ReadersDAO readersDAO;
 
+
+    @Inject
+    @Getter
+    private ReaderFormatter readerFormatter;
+
+    @Inject
+    @Getter
+    private BookFormatter bookFormatter;
+
     private Library library;
 
     @Getter
@@ -38,10 +53,15 @@ public class LibraryForPage {
     @Setter
     private Book bookToCreate = new Book();
 
+    @Getter
+    @Setter
+    private Book selectedBook;
+
 
     @Transactional
     public void createBook(){
         bookToCreate.setLibrary(library);
+        bookToCreate.setBorrowed(Boolean.FALSE);
         this.booksDAO.persist(bookToCreate);
     }
 
@@ -61,15 +81,57 @@ public class LibraryForPage {
     @PostConstruct
     public void init() {
         Map<String, String> requestParameters = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        Long libraryId = Long.parseLong(requestParameters.get("libraryId"));
-        this.library = librariesDAO.findOne(libraryId);  // Fetch the library based on ID
-        loadBooks();
+        String libraryIdParam = requestParameters.get("libraryId");
+
+        if (libraryIdParam != null && !libraryIdParam.isEmpty()) {
+            try {
+                Long libraryId = Long.parseLong(libraryIdParam);
+                this.library = librariesDAO.findOne(libraryId);
+                loadBooks();
+            } catch (NumberFormatException e) {
+                // Log or show a message: invalid libraryId format
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid library ID", null));
+            }
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Missing library ID", null));
+        }
     }
+
     public void loadBooks() {
         if (this.library != null) {
             this.library.setBooks(booksDAO.findBooksByLibraryId(this.library.getId()));
         }
     }
+
+    public void toggleBorrowed(Book book) {
+        try {
+            booksDAO.toggleBorrowed(book.getId());
+        } catch (RollbackException e) {
+            Throwable cause = e.getCause();
+            while (cause != null) {
+                if (cause instanceof OptimisticLockException) {
+                    FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+                    FacesContext.getCurrentInstance().addMessage(null,
+                            new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                                    "The book was updated by another user. Please reload and try again.", null));
+                    // Perkrauti knyga, leisti is naujo paspausti. Musu atveju kadanig po requesto refreshinas page, automatiskai buna perkrauta.
+                    return;
+                }
+                cause = cause.getCause();
+            }
+        }
+
+        catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "The operation was interrupted.", null));
+        }
+    }
+
+
+
 
 
     public Library getLibrary() {

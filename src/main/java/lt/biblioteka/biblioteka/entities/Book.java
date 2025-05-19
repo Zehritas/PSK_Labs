@@ -29,6 +29,23 @@ public class Book {
         this.name = name;
     }
 
+
+    private Boolean borrowed;
+    public Boolean getBorrowed() {
+        return borrowed;
+    }
+
+    public void setBorrowed(Boolean borrowed) {
+        this.borrowed = borrowed;
+    }
+
+
+
+    @Version
+    private int version;
+
+
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "library_id")  // Foreign key column in the Book table
     private Library library;

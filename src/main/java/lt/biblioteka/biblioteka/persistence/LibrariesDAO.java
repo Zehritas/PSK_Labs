@@ -3,6 +3,7 @@ package lt.biblioteka.biblioteka.persistence;
 import lt.biblioteka.biblioteka.entities.Library;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;

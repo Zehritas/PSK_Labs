@@ -12,13 +12,30 @@
     <ol>
         <ui:repeat value="#{libraries.allLibraries}" var="library">
 <!--            <li><h:link value="#{library.name}" /></li>-->
-            <li><h:link value="#{library.name}" outcome="library?libraryId=#{library.id}" /></li>
+            <li>
+                <h:link value="#{libraries.getFormattedLibraryName(library)} (ID: #{library.id})"
+                        outcome="library?libraryId=#{library.id}" />
+            </li>
         </ui:repeat>
     </ol>
     <h:form>
         <h:inputText value="#{libraries.libraryToCreate.name}" required="true" />
         <h:commandButton value="Add new library" actionListener="#{libraries.createLibrary}" action="index?faces-redirect=true"/>
     </h:form>
+
+    <h2>Get book count (Async):</h2>
+    <h:form>
+        <h:inputText value="#{libraryBookCount.libraryId}" />
+        <h:commandButton value="Start Search" action="#{libraryBookCount.fetchBookCount}" />
+    </h:form>
+
+    <h:form>
+        <h:commandButton value="Check Status" action="#{libraryBookCount.checkIfDone}" />
+        <h:outputText value="Loading..." rendered="#{libraryBookCount.loading}" />
+        <h:outputText value="Book Count: #{libraryBookCount.bookCount}" rendered="#{not libraryBookCount.loading and not empty libraryBookCount.bookCount}" />
+    </h:form>
+
+
 
     <h2>Readers:</h2>
     <ol>
@@ -30,7 +47,7 @@
         <h:inputText value="#{readers.readerToCreate.name}" required="true" />
         <h:commandButton value="Add new reader" actionListener="#{readers.createReader}" action="index?faces-redirect=true"/>
     </h:form>
-    <h:link outcome="myBatis/libraries" value="MyBatis implementation"/>
+<!--    <h:link outcome="myBatis/libraries" value="MyBatis implementation"/>-->
 
 </h:body>
 </html>

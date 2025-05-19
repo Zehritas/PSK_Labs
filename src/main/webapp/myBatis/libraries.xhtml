@@ -10,13 +10,14 @@
 <h:body>
     <h2>Libraries:</h2>
     <ol>
-        <ui:repeat value="#{libraries.allLibraries}" var="library">
+        <ui:repeat value="#{librariesMyBatis.allLibraries}" var="library">
             <li><h:link value="#{library.name}" outcome="library?libraryId=#{library.id}" /></li>
+
         </ui:repeat>
     </ol>
     <h:form>
-        <h:inputText value="#{libraries.libraryToCreate.name}" required="true" />
-        <h:commandButton value="Add new library" actionListener="#{libraries.createLibrary}" action="libraries?faces-redirect=true"/>
+        <h:inputText value="#{librariesMyBatis.libraryToCreate.name}" required="true" />
+        <h:commandButton value="Add new library" actionListener="#{librariesMyBatis.createLibrary}" action="libraries?faces-redirect=true"/>
     </h:form>
     <h:link value="Back to index" outcome="/index"/>
 </h:body>
