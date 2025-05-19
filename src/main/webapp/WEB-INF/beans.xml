@@ -6,10 +6,10 @@
                       http://xmlns.jcp.org/xml/ns/javaee/beans_1_1.xsd"
         bean-discovery-mode="annotated">
     <alternatives>
-<!--        <class>lt.biblioteka.biblioteka.services.UpperCaseLibraryNameFormatter</class>-->
+        <class>lt.biblioteka.biblioteka.services.UpperCaseLibraryNameFormatter</class>
     </alternatives>
     <interceptors>
-        <class>lt.biblioteka.biblioteka.interceptors.ExecutionTimeInterceptor</class>
+<!--        <class>lt.biblioteka.biblioteka.interceptors.ExecutionTimeInterceptor</class>-->
     </interceptors>
     <decorators>
         <class>lt.biblioteka.biblioteka.decorators.BookFormatterDecorator</class>

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lt.biblioteka.biblioteka.persistence.ReadersDAO;
 import lt.biblioteka.biblioteka.entities.Reader;
+import lt.biblioteka.biblioteka.services.ReaderFormatterDefault;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
@@ -20,6 +21,9 @@ public class Readers {
     @Getter @Setter
     private Reader readerToCreate = new Reader();
 
+
+    @Inject
+    private ReaderFormatterDefault formatter;
     @Getter
     private List<Reader> allReaders;
 
@@ -35,5 +39,9 @@ public class Readers {
 
     private void loadAllReaders(){
         this.allReaders = readersDAO.loadAll();
+    }
+
+    public String formatReader(Reader reader) {
+        return formatter.format(reader);
     }
 }

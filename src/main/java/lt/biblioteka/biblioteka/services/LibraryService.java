@@ -26,7 +26,7 @@ public class LibraryService {
     @Asynchronous
     public Future<Integer> getBookCountAsync(Long id) {
         try {
-            Thread.sleep(5000); // simulate long search
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             return CompletableFuture.completedFuture(0);

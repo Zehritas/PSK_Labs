@@ -40,7 +40,7 @@
     <h2>Readers:</h2>
     <ol>
         <ui:repeat value="#{readers.allReaders}" var="reader">
-            <li><h:link value="#{reader.name}" outcome="reader?readerId=#{reader.id}" /></li>
+            <li><h:link value="#{readers.formatReader(reader)}" outcome="reader?readerId=#{reader.id}" /></li>
         </ui:repeat>
     </ol>
     <h:form>
